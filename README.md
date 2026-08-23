@@ -40,7 +40,7 @@ gets you a running app with a real anatomical template and a synthetic-but-coher
 
 ## ✨ Features
 
-- 🧩 **One background, any number of overlays.** Pick an anatomical or mean functional image as the background, then layer on any number of ROI masks and (optionally) a GLM contrast, each independently toggleable, colored, and adjustable for opacity/threshold. ROIs and statistical maps are the same underlying abstraction (`OverlayLayer`), so they compose freely — see [Architecture](#-architecture).
+- 🧩 **One background, any number of overlays.** Pick an anatomical or mean functional image as the background, then layer on any number of ROI masks and (optionally) a GLM contrast, each independently toggleable, colored, and adjustable for opacity/threshold. ROIs and statistical maps are the same underlying abstraction (`OverlayLayer`), so they compose freely.
 - ⚡ **Fast.** A full click — recomposing all three orthogonal views and shipping them to the browser — takes about **50 ms**.
 - 🧭 **Correct, verified orientation.** Left/right/anterior/posterior/superior/inferior labeling was checked with an automated test against a synthetic marker at a known location, not just eyeballed.
 - 📈 **A live GLM explorer.** Type a contrast expression, see the statistical map update; click a voxel, see its per-condition effect sizes, the experimental design timeline, and the measured signal against each condition's fitted contribution — all colored consistently across panels.
@@ -147,7 +147,7 @@ pip install -r requirements.txt pytest
 pytest
 ```
 
-55 tests, ~15–20 seconds. Highlights include an empirical check of display orientation against a synthetic marker at a known location, and an end-to-end coherence check that synthetic activation actually colocalizes with its matching ROI. See [`ARCHITECTURE.md`](ARCHITECTURE.md#testing) for details on what's covered and why.
+55 tests, ~15–20 seconds. Highlights include an empirical check of display orientation against a synthetic marker at a known location, and an end-to-end coherence check that synthetic activation actually colocalizes with its matching ROI.
 
 <br>
 
