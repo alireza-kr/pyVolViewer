@@ -153,9 +153,7 @@ pytest
 
 ## 🤝 Contributing
 
-Issues and pull requests are welcome — bug reports, new overlay types, additional colormaps, or anything in the [extending the app](ARCHITECTURE.md#extending-the-app) list.
-
-If you're adding a feature, a quick look at [`ARCHITECTURE.md`](ARCHITECTURE.md) will save you time: the layered `data → processing → figures → components → callbacks` structure means most changes only touch one or two files, and the extending guide has concrete starting points for common additions.
+Issues and pull requests are welcome — whether it’s bug reports, new overlay types, additional colormaps, or anything else you think would improve the project.
 
 <br>
 
