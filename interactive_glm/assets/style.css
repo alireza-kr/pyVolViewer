@@ -1,0 +1,357 @@
+/* ==========================================================================
+   Interactive Brain Viewer - stylesheet
+   Color values mirror interactive_glm/figures/theme.py - keep in sync.
+   ========================================================================== */
+
+:root {
+  --bg-page: #0b0d12;
+  --bg-panel: #12151c;
+  --bg-panel-alt: #171b24;
+  --border: #242938;
+  --text-primary: #e8e9ed;
+  --text-muted: #8b91a3;
+  --accent: #5eead4;
+  --accent-soft: rgba(94, 234, 212, 0.16);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font);
+}
+
+#app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Header                                                                   */
+/* ---------------------------------------------------------------------- */
+
+#app-header {
+  padding: 20px 28px 12px 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+#app-title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+#app-subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Body: sidebar + main column                                             */
+/* ---------------------------------------------------------------------- */
+
+#app-body {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  padding: 20px 28px 28px 28px;
+  align-items: flex-start;
+}
+
+#controls {
+  /* Widened from 260px - the ROI checklist needs the extra room to fit
+     typical region names (e.g. "Region D (no matching contrast)") on one
+     line; see .roi-label-text below for the fallback when a name is too
+     long even for this width. */
+  flex: 0 0 280px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px 18px 18px 18px;
+  position: sticky;
+  top: 20px;
+}
+
+.control-section {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.control-section:last-child { border-bottom: none; }
+
+.control-section-empty { display: none; }
+
+.control-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.control-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 12px 0 4px 0;
+}
+
+.control-hint {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* Background radio group */
+.radio-group { display: flex; flex-direction: column; gap: 6px; }
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.radio-option input { accent-color: var(--accent); flex: 0 0 auto; }
+
+/* ROI rows.
+   Hand-built (not dcc.Checklist) - see the docstring at the top of
+   components/controls.py for why. Each row is one flex line: [custom
+   checkbox indicator] [color swatch] [label text], and must never wrap to
+   a second line no matter how long the ROI's name is - a fixed-width
+   sidebar can't grow to fit an arbitrary atlas region name, and a wrapped
+   row looks broken rather than intentional. min-width: 0 on both the row
+   and the label text is what allows text-overflow: ellipsis to actually
+   take effect (its default min-width is auto, which prevents shrinking
+   below content size and defeats the ellipsis). The full name is still
+   available as a native tooltip on hover. */
+.roi-checklist { display: flex; flex-direction: column; gap: 8px; }
+.roi-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  min-width: 0;
+  user-select: none;
+}
+.roi-checkbox {
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1.5px solid var(--text-muted);
+  background: transparent;
+  position: relative;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.roi-row:not(.roi-row-off) .roi-checkbox {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.roi-row:not(.roi-row-off) .roi-checkbox::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--bg-page);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.roi-swatch {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: 0 0 9px;
+}
+.roi-label-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.roi-row-off .roi-swatch,
+.roi-row-off .roi-label-text {
+  opacity: 0.45;
+}
+
+/* Text input + button */
+.text-input {
+  width: 100%;
+  background: var(--bg-panel-alt);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 7px 10px;
+  margin-top: 2px;
+}
+.text-input:focus { outline: none; border-color: var(--accent); }
+
+.apply-button {
+  width: 100%;
+  margin-top: 8px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 7px;
+  padding: 7px 10px;
+  font-family: var(--font);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.apply-button:hover { background: rgba(94, 234, 212, 0.28); }
+.apply-button:active { transform: translateY(1px); }
+
+.contrast-status {
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  min-height: 14px;
+}
+
+/* Dropdown (react-select-derived markup used by dcc.Dropdown) */
+.dropdown .Select-control,
+.dash-dropdown .Select-control {
+  background: var(--bg-panel-alt) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 7px !important;
+  color: var(--text-primary) !important;
+  min-height: 34px !important;
+}
+.dropdown .Select-value-label, .dropdown .Select-placeholder,
+.dash-dropdown .Select-value-label, .dash-dropdown .Select-placeholder {
+  color: var(--text-primary) !important;
+}
+.dropdown .Select-menu-outer, .dash-dropdown .Select-menu-outer {
+  background: var(--bg-panel-alt) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+  z-index: 20;
+}
+.dropdown .Select-arrow, .dash-dropdown .Select-arrow { border-color: var(--text-muted) transparent transparent; }
+.dropdown .VirtualizedSelectOption:hover, .dash-dropdown .VirtualizedSelectOption:hover {
+  background: var(--accent-soft) !important;
+}
+
+/* Sliders (rc-slider) */
+.rc-slider { margin: 6px 2px 14px 2px; }
+.rc-slider-rail { background: var(--border) !important; height: 4px; }
+.rc-slider-track { background: var(--accent) !important; height: 4px; }
+.rc-slider-handle {
+  border: 2px solid var(--accent) !important;
+  background: var(--bg-page) !important;
+  opacity: 1 !important;
+  width: 14px !important;
+  height: 14px !important;
+  margin-top: -5px !important;
+}
+.rc-slider-handle:hover, .rc-slider-handle:focus { box-shadow: 0 0 0 5px var(--accent-soft) !important; }
+.rc-slider-mark-text { color: var(--text-muted) !important; font-size: 10.5px !important; }
+.rc-slider-tooltip-inner {
+  background: var(--bg-panel-alt) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Main column: viewer + info panels                                       */
+/* ---------------------------------------------------------------------- */
+
+#main-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+#viewer-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.slice-panel {
+  flex: 1 1 280px;
+  min-width: 240px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 10px 6px 10px;
+}
+
+.slice-panel-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
+
+.slice-graph { width: 100%; }
+
+.coordinate-readout {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  padding: 2px 0 4px 0;
+}
+
+#info-panels {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.info-panel {
+  flex: 1 1 380px;
+  min-width: 300px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px 10px 10px 10px;
+}
+
+.info-graph { width: 100%; }
+
+/* When a panel stacks more than one graph (e.g. the design timeline and,
+   below it, the measured-vs-fitted signal plot), separate them with a
+   thin divider instead of letting them touch. Has no effect on panels
+   with only one graph (e.g. the beta chart on its own). */
+.info-graph + .info-graph {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Small screens                                                           */
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  #app-body { flex-direction: column; }
+  #controls { position: static; flex: 1 1 auto; width: 100%; }
+}
