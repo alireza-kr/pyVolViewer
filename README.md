@@ -167,7 +167,7 @@ Issues and pull requests are welcome — whether it’s bug reports, new overlay
 
 If pyVolViewer is useful in your research, please cite it — citations are how tool authors get credit in academic contexts, and how funders/departments see the impact of the time spent building tools like this one.
 
-[![DOI](https://zenodo.org/badge/DOI/REPLACE_WITH_DOI.svg)](https://doi.org/REPLACE_WITH_DOI)
+[![DOI](https://zenodo.org/badge/1344023501.svg)](https://doi.org/10.5281/zenodo.23621837)
 
 ```bibtex
 @software{pyVolViewer,
@@ -175,7 +175,7 @@ If pyVolViewer is useful in your research, please cite it — citations are how 
   title   = {pyVolViewer: an interactive Python viewer for brain imaging data},
   year    = {2026},
   publisher = {Zenodo},
-  doi     = {REPLACE_WITH_DOI},
+  doi     = {https://doi.org/10.5281/zenodo.23621837},
   url     = {https://github.com/alireza-kr/pyVolViewer}
 }
 ```
